@@ -5,7 +5,7 @@ const Key = require('./configuration/env')()
 const mongoose = require('mongoose')
 mongoose.connect(Key.databaseAddress,{ useNewUrlParser: true },(err)=>{
     if(err){
-        console.log(err)
+        console.log(`⚠️  :Connected failed, please check your MongoDB at ${Key.databaseAddress}`)
     }else{
         console.log(`🍟  :Successfully connected to MongoDB at ${Key.databaseAddress}`)
     }
