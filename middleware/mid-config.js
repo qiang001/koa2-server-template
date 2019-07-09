@@ -9,7 +9,8 @@ async function logger(ctx, next){
         status:ctx.status,
         method:ctx.method,
         url:ctx.url,
-        params:ctx.query,
+        parameters:ctx.params,
+        queryStrings:ctx.query,
         reqBody:ctx.request.body,
         resBody:ctx.body,
         cost:s
@@ -24,7 +25,7 @@ async function errorHandling(ctx, next){
     } catch (err) {
         console.log(err)
         ctx.body = {
-            status:err.code || 500,
+            code:err.code || 500,
             message:err.message
         }
     }
