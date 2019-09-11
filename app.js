@@ -1,25 +1,23 @@
 const Koa = require('koa')
-const app = new Koa()
 const Key = require('./configuration/env')()
-// 连接MongoDB by using mongoose
-const mongoose = require('mongoose')
-mongoose.connect(Key.databaseAddress,{ useNewUrlParser: true },(err)=>{
-    if(err){
-        console.log(`⚠️  :Connected failed, please check your MongoDB at ${Key.databaseAddress}`)
-    }else{
-        console.log(`🍟  :Successfully connected to MongoDB at ${Key.databaseAddress}`)
-    }
-})
-mongoose.Promise = global.Promise
-
-//basic middlewares config
+const db = require('./db/index')
 const MidConfig = require('./middleware/mid-config')
-app.use(MidConfig())
-
-//Routes
 const registerRouter  = require('./api/index')
-app.use(registerRouter())
 
-//Http Server
+//Http Server Start
+const app = new Koa()
 const port = Key.port
-app.listen(port, () => console.log(`👻  :Server is now listening for the requests at port: ${port} `))
+serverStart(app,port)
+
+async function serverStart(app,port){
+    try {
+       let res =  await db.connect()
+       console.log(res)
+       app.use(MidConfig())
+       app.use(registerRouter())
+       app.listen(port, () => console.log(`👻  :Server is now listening for the requests at port: ${port} `))
+    }catch (err){
+        console.log(err)
+    }
+
+}
