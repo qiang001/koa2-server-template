@@ -12,7 +12,7 @@ async function logger(ctx, next) {
         cost: s
     }
     let {status,method,url,cost} = info
-    console.log(`[${status===200?chalk.green(status):chalk.red(status)}] [${chalk.yellow(method)}] ${chalk.cyan(url)} (${chalk.gray(cost)})`)
+    console.log(`[${status<300?chalk.green(status):chalk.red(status)}] [${chalk.yellow(method)}] ${chalk.cyan(url)} (${chalk.gray(cost)})`)
 }
 
 //Handling Error
