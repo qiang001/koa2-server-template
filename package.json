@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/qiang001/koa2-server-template#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
     "glob": "^7.1.4",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",

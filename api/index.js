@@ -5,9 +5,12 @@ const { resolve } = require('path')
 registerRouter = () => {
     let routers = [];
     glob.sync(resolve(__dirname, './', '**/@(routes).js'))
-        .map(router => {
-            routers.push(require(router).routes())
-            routers.push(require(router).allowedMethods())
+        .map(file => {
+            let router = require(file)
+            router.map(version=>{
+                routers.push(version.routes())
+                routers.push(version.allowedMethods())
+            })
         })
     return compose(routers)
 }

@@ -1,21 +1,18 @@
 const compose = require('koa-compose')
-
+const chalk = require('chalk')
 //Logger
 async function logger(ctx, next) {
     const start = Date.now()
     await next()
-    const s = (Date.now() - start) / 1000 + ' 秒'
+    const s = (Date.now() - start) / 1000 + 's'
     let info = {
         status: ctx.status,
         method: ctx.method,
         url: ctx.url,
-        parameters: ctx.params,
-        queryStrings: ctx.query,
-        reqBody: ctx.request.body,
-        resBody: ctx.body,
         cost: s
     }
-    console.log(info)
+    let {status,method,url,cost} = info
+    console.log(`[${status===200?chalk.green(status):chalk.red(status)}] [${chalk.yellow(method)}] ${chalk.cyan(url)} (${chalk.gray(cost)})`)
 }
 
 //Handling Error
@@ -25,7 +22,7 @@ async function errorHandling(ctx, next) {
     } catch (err) {
         ctx.status = err.code || 500
         ctx.body = {
-            message: err.message || 'Internal Server Error'
+            error: err.message || 'Internal Server Error'
         }
     }
 }
