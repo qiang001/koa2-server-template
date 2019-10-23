@@ -20,10 +20,16 @@ async function errorHandling(ctx, next) {
     try {
         await next()
     } catch (err) {
-        ctx.status = err.code || 500
-        ctx.body = {
-            error: err.message || 'Internal Server Error'
+        console.log(err)
+        let {code,message,etc} = err
+        ctx.status = code || 500
+        let payload = {
+            error: message || 'Internal Server Error'
         }
+        if(etc){
+            payload['details'] = etc
+        }
+        ctx.body = payload
     }
 }
 

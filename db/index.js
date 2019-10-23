@@ -4,7 +4,7 @@ module.exports = {
     connect:()=>{
         return new Promise((resolve,reject)=>{
             mongoose.Promise = global.Promise
-            mongoose.connect(Key.databaseAddress,{ useNewUrlParser: true },(err)=>{
+            mongoose.connect(Key.databaseAddress,{ useNewUrlParser: true, useFindAndModify: false },(err)=>{
                 if(err){
                     reject(`⚠️  :Connected failed, please check your MongoDB with ${Key.databaseAddress}`)
                 }else{

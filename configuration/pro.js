@@ -1,4 +1,4 @@
 module.exports = {
-    databaseAddress:'mongodb://127.0.0.1:27017/koaPro',  //数据库地址请自行修改
+    databaseAddress:'mongodb://mongo:27017/Pro',
     port:3000
 }
